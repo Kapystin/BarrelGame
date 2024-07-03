@@ -1,18 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
+using BarrelGame.Scripts.Character;
+using BarrelGame.Scripts.Enemy;
 using UnityEngine;
 
-public class Boot : MonoBehaviour
+namespace BarrelGame.Scripts
 {
-    // Start is called before the first frame update
-    void Start()
+    public class Boot : MonoBehaviour
     {
+        private EnemyEventBus _enemyEventBus;
+        private CharacterEventBus _characterEventBus;
         
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private void Awake()
+        {
+            _enemyEventBus = EnemyEventBus.Instance;
+            _characterEventBus = CharacterEventBus.Instance;
+        }
     }
 }

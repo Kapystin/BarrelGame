@@ -1,4 +1,5 @@
 using System;
+using BarrelGame.Scripts.Enemy;
 using UnityEngine;
 
 namespace BarrelGame.Scripts.Character
@@ -9,18 +10,33 @@ namespace BarrelGame.Scripts.Character
         [SerializeField] private CharacterController _characterController;
 
         private const string _velocity = "velocity";
-        
+
+
+        private void OnEnable()
+        {
+            EnemyEventBus.Instance.OnCharacterDetect += OnPlayDeath;
+        }
+
+        private void OnDisable()
+        {
+            EnemyEventBus.Instance.OnCharacterDetect -= OnPlayDeath;
+        }
+
         private void Update()
         {
-            // Debug.Log($">>>{_characterController.velocity.magnitude}");
-
-            SetVelocityValue(_characterController.velocity.normalized.magnitude);
+            var normalizedVelocity = _characterController.velocity.normalized.magnitude;
+            
+            SetVelocityValue(normalizedVelocity);
         }
 
         private void SetVelocityValue(float value)
         {
-            Debug.Log($">>>velocity.magnitude: {value}");
             _animator.SetFloat(_velocity, value);
+        }
+
+        private void OnPlayDeath()
+        {
+            
         }
     }
 }

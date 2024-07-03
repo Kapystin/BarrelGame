@@ -7,7 +7,9 @@ namespace BarrelGame.Scripts.Character
     public class CharacterMovement : MonoBehaviour
     {
         [SerializeField] private CharacterController _characterController;
+        [Range(0, 10)] 
         [SerializeField] private float _moveSpeed = 5; 
+        [Range(0, 10)] 
         [SerializeField] private float _rotationSpeed = 5; 
         
         private IMovementInput _movementInput;
