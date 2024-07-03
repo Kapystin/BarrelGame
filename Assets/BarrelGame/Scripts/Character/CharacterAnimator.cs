@@ -10,16 +10,17 @@ namespace BarrelGame.Scripts.Character
         [SerializeField] private CharacterController _characterController;
 
         private const string _velocity = "velocity";
+        private const string _caught = "caught";
 
 
         private void OnEnable()
         {
-            EnemyEventBus.Instance.OnCharacterDetect += OnPlayDeath;
+            CharacterEventBus.Instance.OnCharacterCaught += OnCharacterCaught;
         }
 
         private void OnDisable()
         {
-            EnemyEventBus.Instance.OnCharacterDetect -= OnPlayDeath;
+            CharacterEventBus.Instance.OnCharacterCaught -= OnCharacterCaught;
         }
 
         private void Update()
@@ -34,9 +35,9 @@ namespace BarrelGame.Scripts.Character
             _animator.SetFloat(_velocity, value);
         }
 
-        private void OnPlayDeath()
+        private void OnCharacterCaught()
         {
-            
+            _animator.SetTrigger(_caught);
         }
     }
 }

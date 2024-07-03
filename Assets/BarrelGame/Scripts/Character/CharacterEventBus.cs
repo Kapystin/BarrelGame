@@ -20,6 +20,11 @@ namespace BarrelGame.Scripts.Character
         
         private static CharacterEventBus _instance = null;
 
-        public Action OnCharacterDeath;
+        public Action OnCharacterCaught;
+
+        public void OnCharacterDeathAction()
+        {
+            OnCharacterCaught?.Invoke();
+        }
     }
 }
