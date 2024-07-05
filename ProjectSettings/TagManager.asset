@@ -7,6 +7,7 @@ TagManager:
   - FxTemporaire
   - Enemy
   - Obstacles
+  - Money
   layers:
   - Default
   - TransparentFX

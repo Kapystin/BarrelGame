@@ -1,5 +1,6 @@
 using System;
 using BarrelGame.Scripts.Enemy;
+using BarrelGame.Scripts.Enums;
 using UnityEngine;
 
 namespace BarrelGame.Scripts.Character
@@ -11,18 +12,22 @@ namespace BarrelGame.Scripts.Character
 
         private const string _velocity = "velocity";
         private const string _caught = "caught";
+        private const string _dance = "dance";
+        private const string _wave = "wave";
+        private const string _init = "init";
 
 
         private void OnEnable()
         {
-            CharacterEventBus.Instance.OnCharacterCaught += OnCharacterCaught;
+            GameStateMachine.Instance.OnGameStateChange += OnGameStateChange;
         }
+
 
         private void OnDisable()
         {
-            CharacterEventBus.Instance.OnCharacterCaught -= OnCharacterCaught;
+            GameStateMachine.Instance.OnGameStateChange -= OnGameStateChange;
         }
-
+        
         private void Update()
         {
             var normalizedVelocity = _characterController.velocity.normalized.magnitude;
@@ -35,9 +40,22 @@ namespace BarrelGame.Scripts.Character
             _animator.SetFloat(_velocity, value);
         }
 
-        private void OnCharacterCaught()
+        public void OnCharacterCaught()
         {
             _animator.SetTrigger(_caught);
+        }
+
+        public void OnCharacterWin()
+        {
+            _animator.SetTrigger(_dance);
+        }
+        
+        private void OnGameStateChange(GameStateType gameStateType)
+        {
+            if (gameStateType == GameStateType.Intro)
+            {
+                _animator.SetTrigger(_init);
+            }
         }
     }
 }

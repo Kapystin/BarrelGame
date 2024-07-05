@@ -1,12 +1,9 @@
 using BarrelGame.Scripts.Character;
-using UnityEngine;
 
 namespace BarrelGame.Scripts.Barrel
 {
-    public class BarrelAnimator : MonoBehaviour
+    public class DestructionBarrelAnimator : BaseBarrelAnimator
     {
-        [SerializeField] private Animator _animator;
-        
         private const string _destruction = "destruction";
 
         private void OnEnable()
