@@ -31,8 +31,6 @@ namespace BarrelGame.Scripts.UI.InGamePanel
 
             _cancellationTokenSource = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSource.Token;
-            
-            Timer();
         }
         
         public void AddListeners()
@@ -74,9 +72,14 @@ namespace BarrelGame.Scripts.UI.InGamePanel
         {
             _gameStateType = gameStateType;
 
-            if (gameStateType == GameStateType.Win)
+            switch (gameStateType)
             {
-                _cancellationTokenSource.Cancel();
+                case GameStateType.Win:
+                    _cancellationTokenSource.Cancel();
+                    break;
+                case GameStateType.Play:
+                    Timer();
+                    break;
             }
         }
 
