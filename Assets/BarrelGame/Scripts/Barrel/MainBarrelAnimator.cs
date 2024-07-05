@@ -8,16 +8,20 @@ namespace BarrelGame.Scripts.Barrel
     {
         [SerializeField] private CharacterController _characterController;
         private const string _velocity = "velocity";
+        private const string _win = "win";
         private const string _init = "init";
         
         private void OnEnable()
         {
             CharacterEventBus.Instance.OnCharacterBarrelPickup += OnCharacterBarrelPickup;
+            GameStateMachine.Instance.OnGameStateChange += OnGameStateChange;
+            
         }
 
         private void OnDisable()
         {
             CharacterEventBus.Instance.OnCharacterBarrelPickup -= OnCharacterBarrelPickup;
+            GameStateMachine.Instance.OnGameStateChange -= OnGameStateChange;
         }
 
         private void Update()
@@ -25,6 +29,14 @@ namespace BarrelGame.Scripts.Barrel
             var normalizedVelocity = _characterController.velocity.normalized.magnitude;
             
             SetVelocityValue(normalizedVelocity);
+        }
+        
+        private void OnGameStateChange(GameStateType gameStateType)
+        {
+            if (gameStateType is GameStateType.Win)
+            {
+                _animator.SetTrigger(_win);
+            }
         }
 
         private void SetVelocityValue(float value)
